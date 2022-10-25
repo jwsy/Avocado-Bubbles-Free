@@ -1,0 +1,41 @@
+{
+  "background_color": "#ffffff",
+  "description": "avocado-bubbles game in KaboomJS",
+  "dir": "ltr",
+  "display": "minimal-ui",
+  "display_override": [],
+  "lang": "en",
+  "name": "avocado-bubbles",
+  "orientation": "any",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope": "/",
+  "share_target": {},
+  "short_name": "avocado-bubbles",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "categories": ["games", "avocado"],
+  "screenshots": [
+    {
+      "src": "sprites/avocado-bubbles-screenshot-wide-1280x720.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpg",
+      "platform": "wide",
+      "label": "Screenshot of popping bubbbles"
+    }
+  ],
+  "icons": [
+    {
+      "src": "sprites/avocado-bubbles-icon.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "sprites/avocado-bubbles-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": []
+}
