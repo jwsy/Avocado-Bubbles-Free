@@ -7,41 +7,34 @@ k = kaboom({
 });
 
 // load assets
-loadPedit("fire", "sprites/fire.pedit");
+loadPedit("bubble", "sprites/bubble.pedit");
 loadPedit("avocado", "sprites/avocado.pedit");
 loadSound("avocado-o", "sounds/avocado-o.mp3");
-// loadSound("o", "sounds/o.mp3");
-loadSound("o", "sounds/pop.mp3");
-loadSound("fire", "sounds/fire.mp3");
-loadSound("J2edited", "sounds/J2edited.mp3");
 
 const avocadoOSound = new Howl({
-  src: ['sounds/avocado-o.mp3'],
-  html5: true,
-  format: ['mp3']
-});
+  src: ['sounds/avocado-o.mp3'], html5: true, format: ['mp3']
+})
 
-let startTime = -1;
-let turbos = 0;
-const TURBOMAX = 2;
+const popSound = new Howl({
+  src: ['sounds/pop.mp3'], html5: true, format: ['mp3']
+})
 
-const music = play("J2edited", {
-  volume: 0.6,
-  loop: true
-});
+const j2bgmSound = new Howl({
+  src: ['sounds/J2edited.mp3'], html5: true, format: ['mp3']
+})
+
+let startTime = -1
+let turbos = 0
+const TURBOMAX = 2
 
 scene("game", () => {
   // initialize context
   const PLAYER_SPEED = 200;
   let showStats = false;
 
-  music.play();
+  j2bgmSound.play()
 
-  layers([
-    "bg",
-    "obj",
-    "ui",
-  ], "obj");
+  layers(["bg", "obj", "ui",], "obj");
 
   // // implement touch
   let el = document.getElementsByTagName("canvas")[0];
@@ -93,14 +86,16 @@ scene("game", () => {
     area(),
   ]);
 
-  onClick('avocado', () => { play('avocado-o'); });
+  onClick('avocado', () => {
+    avocadoOSound.play();
+  });
   onTouchStart((id, pos) => {
     console.log(`touched ${pos}, avocado ${avocado.pos}`);
     // console.log(`avocado tx pos ${pos.x - avocado.pos.x}`);
     // console.log(`avocado ty pos ${pos.y - avocado.pos.y}`);
     console.log(`avocado dist pos ${pos.dist(avocado.pos)}`);
     if (pos.dist(avocado.pos) < 150) {
-      play('avocado-o');
+      avocadoOSound.play();
     }
   });
 
@@ -203,8 +198,7 @@ scene("game", () => {
   function spawnEnemy() {
     let insertPos = pos(rand(10, width() - 10), rand(10, height() - 10));
 
-    let enemySprite = "fire";
-    // play('fire', { volume: 0.4 });
+    let enemySprite = "bubble";
 
     return add([
       sprite(enemySprite),
@@ -242,7 +236,7 @@ scene("game", () => {
     b.isOFaced = true;
     b.lastOFaceTime = time();
     score.text = score.value;
-    play('o');
+    popSound.play()
     spawnEnemy();
     spawnEnemy();
     spawnEnemy();
@@ -254,8 +248,6 @@ scene("game", () => {
       size: 36,
       font: "sinko",
     }),
-    // all objects defaults origin to center, we want score text to be top left
-    // plain objects becomes fields of score
     { value: 0 },
   ]);
 
@@ -320,7 +312,6 @@ scene("game", () => {
   get('debugText').forEach((e) => { e.hidden = true; });
   // spawn an enemy every period
   loop(.8, spawnEnemy);
-  // play('avocado-o');  
 });
 
 scene("main", () => {
@@ -369,10 +360,10 @@ scene("main", () => {
     if (pos.dist(avocado.pos) < 150) {
       startGame();
     }
-    if (pos.dist(musics.pos) < 150) {
-      console.log('musics from scene start')
-      window.location.assign('https://soundcloud.com/b-diggs-1/just-two')
-    }
+    // if (pos.dist(musics.pos) < 150) {
+    //   console.log('musics from scene start')
+    //   window.location.assign('https://soundcloud.com/b-diggs-1/just-two')
+    // }
   });
 
   onKeyDown("space", startGame);
@@ -382,10 +373,7 @@ scene("main", () => {
 
 scene("end", () => {
 
-  layers([
-    "obj",
-    "ui",
-  ], "obj");
+  layers(["obj", "ui",], "obj");
 
   turbos = 0;
 
@@ -441,14 +429,14 @@ scene("end", () => {
       console.log('startGame from scene end')
       startGame()
     }
-    if (pos.dist(musics.pos) < 150) {
-      console.log('musics from scene end')
-      window.location.assign('https://soundcloud.com/b-diggs-1/just-two')
-    }
+    // if (pos.dist(musics.pos) < 150) {
+    //   console.log('musics from scene end')
+    //   window.location.assign('https://soundcloud.com/b-diggs-1/just-two')
+    // }
   });
 
   onClick("musics", () => {
-    
+
   })
   onKeyDown("space", startGame);
   onClick('avocado', startGame);
