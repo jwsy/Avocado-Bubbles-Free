@@ -565,11 +565,11 @@
                 node.volume = sound._volume * Howler2.volume();
                 node.playbackRate = sound._rate;
                 try {
-                  var play2 = node.play();
-                  if (play2 && typeof Promise !== "undefined" && (play2 instanceof Promise || typeof play2.then === "function")) {
+                  var play = node.play();
+                  if (play && typeof Promise !== "undefined" && (play instanceof Promise || typeof play.then === "function")) {
                     self._playLock = true;
                     setParams();
-                    play2.then(function() {
+                    play.then(function() {
                       self._playLock = false;
                       node._unlocked = true;
                       if (!internal) {
@@ -4889,33 +4889,32 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     "startScene": "main",
     "background": [125, 182, 235]
   });
-  loadPedit("fire", "sprites/fire.pedit");
+  loadPedit("bubble", "sprites/bubble.pedit");
   loadPedit("avocado", "sprites/avocado.pedit");
   loadSound("avocado-o", "sounds/avocado-o.mp3");
-  loadSound("o", "sounds/pop.mp3");
-  loadSound("fire", "sounds/fire.mp3");
-  loadSound("J2edited", "sounds/J2edited.mp3");
   var avocadoOSound = new import_howler.Howl({
     src: ["sounds/avocado-o.mp3"],
+    html5: true,
+    format: ["mp3"]
+  });
+  var popSound = new import_howler.Howl({
+    src: ["sounds/pop.mp3"],
+    html5: true,
+    format: ["mp3"]
+  });
+  var j2bgmSound = new import_howler.Howl({
+    src: ["sounds/J2edited.mp3"],
     html5: true,
     format: ["mp3"]
   });
   var startTime = -1;
   var turbos = 0;
   var TURBOMAX = 2;
-  var music = play("J2edited", {
-    volume: 0.6,
-    loop: true
-  });
   scene("game", () => {
     const PLAYER_SPEED = 200;
     let showStats = false;
-    music.play();
-    layers([
-      "bg",
-      "obj",
-      "ui"
-    ], "obj");
+    j2bgmSound.play();
+    layers(["bg", "obj", "ui"], "obj");
     let el = document.getElementsByTagName("canvas")[0];
     el.addEventListener("touchstart", handleTouchMouseStartMove, false);
     el.addEventListener("touchmove", handleTouchMouseStartMove, false);
@@ -4960,13 +4959,13 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       area()
     ]);
     onClick("avocado", () => {
-      play("avocado-o");
+      avocadoOSound.play();
     });
     onTouchStart((id, pos2) => {
       console.log(`touched ${pos2}, avocado ${avocado.pos}`);
       console.log(`avocado dist pos ${pos2.dist(avocado.pos)}`);
       if (pos2.dist(avocado.pos) < 150) {
-        play("avocado-o");
+        avocadoOSound.play();
       }
     });
     onUpdate("avocado", (r) => {
@@ -5052,7 +5051,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     onKeyDown("down", movePlayerDown);
     function spawnEnemy() {
       let insertPos = pos(rand(10, width() - 10), rand(10, height() - 10));
-      let enemySprite = "fire";
+      let enemySprite = "bubble";
       return add([
         sprite(enemySprite),
         insertPos,
@@ -5085,7 +5084,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       b2.isOFaced = true;
       b2.lastOFaceTime = time();
       score.text = score.value;
-      play("o");
+      popSound.play();
       spawnEnemy();
       spawnEnemy();
       spawnEnemy();
@@ -5191,19 +5190,12 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       if (pos2.dist(avocado.pos) < 150) {
         startGame();
       }
-      if (pos2.dist(musics.pos) < 150) {
-        console.log("musics from scene start");
-        window.location.assign("https://soundcloud.com/b-diggs-1/just-two");
-      }
     });
     onKeyDown("space", startGame);
     onClick("avocado", startGame);
   });
   scene("end", () => {
-    layers([
-      "obj",
-      "ui"
-    ], "obj");
+    layers(["obj", "ui"], "obj");
     turbos = 0;
     let totalTime = Date.now() - startTime;
     const bg = add([
@@ -5247,10 +5239,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       if (pos2.dist(avocado.pos) < 250) {
         console.log("startGame from scene end");
         startGame();
-      }
-      if (pos2.dist(musics.pos) < 150) {
-        console.log("musics from scene end");
-        window.location.assign("https://soundcloud.com/b-diggs-1/just-two");
       }
     });
     onClick("musics", () => {
