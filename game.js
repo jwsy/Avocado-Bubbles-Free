@@ -4895,7 +4895,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var avocadoOSound = new import_howler.Howl({
     src: ["sounds/avocado-o.mp3"],
     html5: true,
-    format: ["mp3"]
+    format: ["mp3"],
+    volume: 0.8
   });
   var popSound = new import_howler.Howl({
     src: ["sounds/pop.mp3"],
@@ -4905,7 +4906,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   var j2bgmSound = new import_howler.Howl({
     src: ["sounds/J2edited.mp3"],
     html5: true,
-    format: ["mp3"]
+    format: ["mp3"],
+    volume: 0.6
   });
   var startTime = -1;
   var turbos = 0;
