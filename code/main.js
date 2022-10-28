@@ -12,7 +12,7 @@ loadPedit("avocado", "sprites/avocado.pedit");
 loadSound("avocado-o", "sounds/avocado-o.mp3");
 
 const avocadoOSound = new Howl({
-  src: ['sounds/avocado-o.mp3'], html5: true, format: ['mp3']
+  src: ['sounds/avocado-o.mp3'], html5: true, format: ['mp3'], volume: 0.8
 })
 
 const popSound = new Howl({
@@ -20,7 +20,7 @@ const popSound = new Howl({
 })
 
 const j2bgmSound = new Howl({
-  src: ['sounds/J2edited.mp3'], html5: true, format: ['mp3']
+  src: ['sounds/J2edited.mp3'], html5: true, format: ['mp3'], volume: 0.6
 })
 
 let startTime = -1

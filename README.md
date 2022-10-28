@@ -1,9 +1,9 @@
 ![avocado](avocado-bubbles-icon.png)![avocado](avocado-bubbles-icon.png)![avocado](avocado-bubbles-icon.png)
 
-## Play the game hosted on fly.io
-# https://avocado-bubbles.fly.dev
+## Play the game hosted on Render
+# https://avocado-bubbles-free.onrender.com/
 
-Replit source: https://replit.com/@jwsy/avocado-bubbles
+Replit source: https://replit.com/@jwsy/avocado-bubbles-free
 
 ![avocado](avocado-bubbles-icon.png)![avocado](avocado-bubbles-icon.png)![avocado](avocado-bubbles-icon.png)
 
