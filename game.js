@@ -5164,9 +5164,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       origin("top")
     ]);
     const musics = add([
-      pos(width() / 2, height()),
+      pos(width() / 2, height() - 24),
       text('Music @B-Diggs-1\n"Just Two"\non Soundcloud', {
-        size: 32,
+        size: 48,
         font: "apl386o"
       }),
       origin("bot"),
@@ -5212,9 +5212,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       layer("ui")
     ]);
     const musics = add([
-      pos(width() / 2, height()),
+      pos(width() / 2, height() - 24),
       text('Music @B-Diggs-1\n"Just Two"\non Soundcloud', {
-        size: 32,
+        size: 48,
         font: "apl386o"
       }),
       origin("bot"),
