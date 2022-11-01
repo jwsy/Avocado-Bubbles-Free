@@ -4907,7 +4907,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     src: ["sounds/J2edited.mp3"],
     html5: true,
     format: ["mp3"],
-    volume: 0.6
+    volume: 0.6,
+    loop: true
   });
   var startTime = -1;
   var turbos = 0;
@@ -4915,7 +4916,6 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   scene("game", () => {
     const PLAYER_SPEED = 200;
     let showStats = false;
-    j2bgmSound.play();
     layers(["bg", "obj", "ui"], "obj");
     let el = document.getElementsByTagName("canvas")[0];
     el.addEventListener("touchstart", handleTouchMouseStartMove, false);
@@ -4923,23 +4923,27 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     let epochTime = Date.now();
     startTime = Date.now();
     function findPos(obj) {
-      var curleft = 0, curtop = 0;
+      let curleft = 0;
+      let curtop = 0;
       if (obj.offsetParent) {
         do {
           curleft += obj.offsetLeft;
           curtop += obj.offsetTop;
         } while (obj = obj.offsetParent);
-        return { x: curleft - document.body.scrollLeft, y: curtop - document.body.scrollTop };
+        return {
+          x: curleft - document.body.scrollLeft,
+          y: curtop - document.body.scrollTop
+        };
       }
     }
     __name(findPos, "findPos");
     function handleTouchMouseStartMove(evt) {
       evt.preventDefault();
-      var el2 = document.getElementsByTagName("canvas")[0];
+      let el2 = document.getElementsByTagName("canvas")[0];
       clientRec = el2.getBoundingClientRect();
       x = evt.targetTouches[0].pageX;
       y = evt.targetTouches[0].pageY;
-      var curTime = Date.now();
+      let curTime = Date.now();
       if (curTime - epochTime > 100) {
         epochTime = curTime;
       }
@@ -4974,7 +4978,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       if (r.isOFaced) {
         r.frame = 1;
         r.scale = vec2(avocado.dScale + Math.sin(2.5 * (time() - r.lastOFaceTime)) * 2.8);
-        var ct = time();
+        let ct = time();
         if (ct - r.lastOFaceTime > 1.3) {
           r.frame = 0;
           r.lastOFaceTime = ct;
@@ -4993,8 +4997,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     onKeyPress("s", () => {
       console.log("Toggle stats");
       showStats = !showStats;
-      get("debugText").for;
-      Each((e) => {
+      get("debugText").forEach((e) => {
         e.hidden = showStats;
       });
     });
@@ -5011,7 +5014,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
           text("\nTURBO\nENGAGED", 32),
           origin("top")
         ]);
-        loop(0.75, spawnEnemy);
+        loop(0.5, spawnEnemy);
         turbos++;
       }
     });
@@ -5100,8 +5103,9 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       { value: 0 }
     ]);
     const fpsText = add([
-      pos(width() * 0.6, 12),
-      text("fps", { font: "sinko" }),
+      pos(width() * 0.5, 24),
+      text("fps", { font: "sinko", size: 24 }),
+      ,
       { value: 0 },
       "debugText"
     ]);
@@ -5124,7 +5128,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
       mp = mousePos();
       mousePosText.text = "mpos: " + JSON.stringify(mp);
       aPosText.text = "apos: " + JSON.stringify(avocado.pos);
-      var curTime = Date.now();
+      let curTime = Date.now();
       if (curTime - epochTime > 100) {
         epochTime = curTime;
       }
@@ -5172,6 +5176,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     const startGame = /* @__PURE__ */ __name(() => {
       console.log("main => game");
       avocadoOSound.play();
+      j2bgmSound.play();
       go("game");
     }, "startGame");
     const avocado = add([
