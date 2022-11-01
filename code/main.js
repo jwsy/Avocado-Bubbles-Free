@@ -1,15 +1,15 @@
-import kaboom from "kaboom";
-import { Howl } from "howler";
+import kaboom from "kaboom"
+import { Howl } from "howler"
 
 k = kaboom({
   "fullscreen": true, "startScene": "main",
   "background": [125, 182, 235,]
-});
+})
 
 // load assets
-loadPedit("bubble", "sprites/bubble.pedit");
-loadPedit("avocado", "sprites/avocado.pedit");
-loadSound("avocado-o", "sounds/avocado-o.mp3");
+loadPedit("bubble", "sprites/bubble.pedit")
+loadPedit("avocado", "sprites/avocado.pedit")
+loadSound("avocado-o", "sounds/avocado-o.mp3")
 
 const avocadoOSound = new Howl({
   src: ['sounds/avocado-o.mp3'], html5: true, format: ['mp3'], volume: 0.8
@@ -20,7 +20,9 @@ const popSound = new Howl({
 })
 
 const j2bgmSound = new Howl({
-  src: ['sounds/J2edited.mp3'], html5: true, format: ['mp3'], volume: 0.6
+  src: ['sounds/J2edited.mp3'], html5: true, format: ['mp3'], volume: 0.6,
+  // autoplay: true, loop: true,
+  loop: true,
 })
 
 let startTime = -1
@@ -29,46 +31,49 @@ const TURBOMAX = 2
 
 scene("game", () => {
   // initialize context
-  const PLAYER_SPEED = 200;
-  let showStats = false;
+  const PLAYER_SPEED = 200
+  let showStats = false
 
-  j2bgmSound.play()
+  // j2bgmSound.play()
 
-  layers(["bg", "obj", "ui",], "obj");
+  layers(["bg", "obj", "ui",], "obj")
 
   // // implement touch
-  let el = document.getElementsByTagName("canvas")[0];
-  el.addEventListener("touchstart", handleTouchMouseStartMove, false);
-  el.addEventListener("touchmove", handleTouchMouseStartMove, false);
-  let epochTime = Date.now();
-  startTime = Date.now();
+  let el = document.getElementsByTagName("canvas")[0]
+  el.addEventListener("touchstart", handleTouchMouseStartMove, false)
+  el.addEventListener("touchmove", handleTouchMouseStartMove, false)
+  let epochTime = Date.now()
+  startTime = Date.now()
 
   function findPos(obj) {
-    var curleft = 0,
-      curtop = 0;
+    let curleft = 0
+    let curtop = 0
 
     if (obj.offsetParent) {
       do {
-        curleft += obj.offsetLeft;
-        curtop += obj.offsetTop;
-      } while (obj = obj.offsetParent);
+        curleft += obj.offsetLeft
+        curtop += obj.offsetTop
+      } while (obj = obj.offsetParent)
 
-      return { x: curleft - document.body.scrollLeft, y: curtop - document.body.scrollTop };
+      return {
+        x: curleft - document.body.scrollLeft,
+        y: curtop - document.body.scrollTop
+      }
     }
   }
 
   function handleTouchMouseStartMove(evt) {
-    evt.preventDefault();
-    var el = document.getElementsByTagName("canvas")[0];
-    clientRec = el.getBoundingClientRect();
-    x = evt.targetTouches[0].pageX;
-    y = evt.targetTouches[0].pageY;
-    // console.log("hTMSM : ", clientRec, x, y);
-    var curTime = Date.now();
+    evt.preventDefault()
+    let el = document.getElementsByTagName("canvas")[0]
+    clientRec = el.getBoundingClientRect()
+    x = evt.targetTouches[0].pageX
+    y = evt.targetTouches[0].pageY
+    // console.log("hTMSM : ", clientRec, x, y)
+    let curTime = Date.now()
     if (curTime - epochTime > 100) {
       epochTime = curTime
     }
-    handleTTouch(x, y);
+    handleTTouch(x, y)
   }
 
   const avocado = add([
@@ -84,35 +89,35 @@ scene("game", () => {
       dScale: 2
     },
     area(),
-  ]);
+  ])
 
   onClick('avocado', () => {
-    avocadoOSound.play();
-  });
+    avocadoOSound.play()
+  })
   onTouchStart((id, pos) => {
-    console.log(`touched ${pos}, avocado ${avocado.pos}`);
-    // console.log(`avocado tx pos ${pos.x - avocado.pos.x}`);
-    // console.log(`avocado ty pos ${pos.y - avocado.pos.y}`);
-    console.log(`avocado dist pos ${pos.dist(avocado.pos)}`);
+    console.log(`touched ${pos}, avocado ${avocado.pos}`)
+    // console.log(`avocado tx pos ${pos.x - avocado.pos.x}`)
+    // console.log(`avocado ty pos ${pos.y - avocado.pos.y}`)
+    console.log(`avocado dist pos ${pos.dist(avocado.pos)}`)
     if (pos.dist(avocado.pos) < 150) {
-      avocadoOSound.play();
+      avocadoOSound.play()
     }
-  });
+  })
 
   onUpdate("avocado", (r) => {
     if (r.isOFaced) {
-      r.frame = 1;
-      r.scale = vec2(avocado.dScale + Math.sin(2.5 * (time() - r.lastOFaceTime)) * 2.8);
+      r.frame = 1
+      r.scale = vec2(avocado.dScale + Math.sin(2.5 * (time() - r.lastOFaceTime)) * 2.8)
       // console.log(time() - r.lastOFaceTime)
-      var ct = time();
+      let ct = time()
       if (ct - r.lastOFaceTime > 1.3) {
-        r.frame = 0;
-        r.lastOFaceTime = ct;
-        r.isOFaced = false;
+        r.frame = 0
+        r.lastOFaceTime = ct
+        r.isOFaced = false
       }
     }
     else {
-      r.scale = vec2(avocado.dScale + Math.sin(time()) * .1);
+      r.scale = vec2(avocado.dScale + Math.sin(time()) * .1)
     }
 
     if (avocado.dir
@@ -123,23 +128,22 @@ scene("game", () => {
       && Math.abs(avocado.pos.x - avocado.dir.pos.x) > 10
       && Math.abs(avocado.pos.y - avocado.dir.pos.y) > 10
     ) {
-      let angleDeg = avocado.pos.angle(avocado.dir.pos) + 180;
-      // console.log("moveAvocadoPos : avocado.pos = " + avocado.pos.x + "," + avocado.pos.y);
-      // console.log("moveAvocadoPos : avocado.pos.angle(avocado.dir.pos) = " + angleDeg);
-      let movX = Math.cos(angleDeg * Math.PI / 180) * PLAYER_SPEED;
-      let movY = Math.sin(angleDeg * Math.PI / 180) * PLAYER_SPEED;
-      avocado.move(movX, movY);
+      let angleDeg = avocado.pos.angle(avocado.dir.pos) + 180
+      // console.log("moveAvocadoPos : avocado.pos = " + avocado.pos.x + "," + avocado.pos.y)
+      // console.log("moveAvocadoPos : avocado.pos.angle(avocado.dir.pos) = " + angleDeg)
+      let movX = Math.cos(angleDeg * Math.PI / 180) * PLAYER_SPEED
+      let movY = Math.sin(angleDeg * Math.PI / 180) * PLAYER_SPEED
+      avocado.move(movX, movY)
     }
     // else {
-    //   avocado.move(0,0);
+    //   avocado.move(0,0)
     // }
-  });
+  })
 
   onKeyPress('s', () => {
-    console.log('Toggle stats');
-    showStats = !showStats;
-    get('debugText').for
-    Each((e) => { e.hidden = showStats; });
+    console.log('Toggle stats')
+    showStats = !showStats
+    get('debugText').forEach((e) => { e.hidden = showStats })
   });
 
   onKeyPress('t', () => {
@@ -156,7 +160,7 @@ scene("game", () => {
         text("\nTURBO\nENGAGED", 32),
         origin("top")
       ]);
-      loop(.75, spawnEnemy);
+      loop(.5, spawnEnemy);
       turbos++;
     }
 
@@ -253,8 +257,9 @@ scene("game", () => {
 
   // display fps
   const fpsText = add([
-    pos(width() * 0.6, 12),
-    text("fps", { font: "sinko" }),
+    pos(width() * 0.5, 24),
+    text("fps", { font: "sinko", size: 24 }),
+    ,
     { value: 0, },
     "debugText"
   ]);
@@ -281,7 +286,7 @@ scene("game", () => {
     // console.log("updateMousePosText.mp: ", JSON.stringify(mp));
     mousePosText.text = "mpos: " + JSON.stringify(mp);
     aPosText.text = "apos: " + JSON.stringify(avocado.pos);
-    var curTime = Date.now();
+    let curTime = Date.now();
     if (curTime - epochTime > 100) {
       epochTime = curTime
       // spawnBullet(player.pos);
@@ -333,10 +338,12 @@ scene("main", () => {
   ]);
 
   const startGame = () => {
-    console.log("main => game");
+    console.log("main => game")
     // for some strange reason I need to play a sound with Howler ONCE
-    avocadoOSound.play();
-    go("game");
+    avocadoOSound.play()
+    j2bgmSound.play()
+
+    go('game')
   };
 
   const avocado = add([
@@ -400,10 +407,10 @@ scene("end", () => {
 
 
   const startGame = () => {
-    console.log("end => game");
+    console.log("end => game")
     // for some strange reason I need to play a sound with Howler ONCE
-    avocadoOSound.play();
-    go("game");
+    avocadoOSound.play()
+    go("game")
   };
 
   const avocado = add([
@@ -438,9 +445,9 @@ scene("end", () => {
   onClick("musics", () => {
 
   })
-  onKeyDown("space", startGame);
-  onClick('avocado', startGame);
+  onKeyDown("space", startGame)
+  onClick('avocado', startGame)
 
 });
 
-go("main");
+go("main")
