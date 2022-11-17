@@ -4887,7 +4887,8 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   k = no({
     "fullscreen": true,
     "startScene": "main",
-    "background": [125, 182, 235]
+    "background": [125, 182, 235],
+    "touchToMouse": true
   });
   loadPedit("bubble", "sprites/bubble.pedit");
   loadPedit("avocado", "sprites/avocado.pedit");
@@ -4896,7 +4897,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     src: ["sounds/avocado-o.mp3"],
     html5: true,
     format: ["mp3"],
-    volume: 0.8
+    volume: 0.6
   });
   var popSound = new import_howler.Howl({
     src: ["sounds/pop.mp3"],
@@ -4907,7 +4908,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
     src: ["sounds/J2edited.mp3"],
     html5: true,
     format: ["mp3"],
-    volume: 0.6,
+    volume: 0.4,
     loop: true
   });
   var startTime = -1;
@@ -5160,7 +5161,7 @@ vec4 frag(vec3 pos, vec2 uv, vec4 color, sampler2D tex) {
   scene("main", () => {
     const bg = add([
       pos(width() / 2, height() / 10),
-      text("avocado-bubbles\nby replit@jwsy \n\npop 55 BUBBLES\n\nClick me to start", 32),
+      text("Avocado Bubbles FREE\nby replit@jwsy \n\npop 55 BUBBLES\n\nClick me to start", 32),
       origin("top")
     ]);
     const musics = add([
