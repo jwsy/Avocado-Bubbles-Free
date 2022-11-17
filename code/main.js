@@ -3,7 +3,8 @@ import { Howl } from "howler"
 
 k = kaboom({
   "fullscreen": true, "startScene": "main",
-  "background": [125, 182, 235,]
+  "background": [125, 182, 235,],
+  "touchToMouse": true
 })
 
 // load assets
@@ -12,7 +13,8 @@ loadPedit("avocado", "sprites/avocado.pedit")
 loadSound("avocado-o", "sounds/avocado-o.mp3")
 
 const avocadoOSound = new Howl({
-  src: ['sounds/avocado-o.mp3'], html5: true, format: ['mp3'], volume: 0.8
+  src: ['sounds/avocado-o.mp3'],
+  html5: true, format: ['mp3'], volume: 0.6
 })
 
 const popSound = new Howl({
@@ -20,7 +22,9 @@ const popSound = new Howl({
 })
 
 const j2bgmSound = new Howl({
-  src: ['sounds/J2edited.mp3'], html5: true, format: ['mp3'], volume: 0.6,
+  // src: ['sounds/avocado-o.mp3'], 
+  src: ['sounds/J2edited.mp3'],
+  html5: true, format: ['mp3'], volume: 0.4,
   // autoplay: true, loop: true,
   loop: true,
 })
@@ -322,7 +326,7 @@ scene("game", () => {
 scene("main", () => {
   const bg = add([
     pos(width() / 2, height() / 10),
-    text("avocado-bubbles\nby replit@jwsy \n\npop 55 BUBBLES\n\nClick me to start", 32),
+    text("Avocado Bubbles FREE\nby replit@jwsy \n\npop 55 BUBBLES\n\nClick me to start", 32),
     origin("top"),
   ]);
 
