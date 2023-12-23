@@ -8,7 +8,14 @@
   	<link rel="icon" type="image/png" href="sprites/avocado-bubbles-icon.png">
 	<link rel="manifest" href="manifest.json">
     <!-- Add the service worker registration. It will internally load pwabuilder-sw.js -->
-    <script type="module" src="pwabuilder-sw-register.js"></script>
+    <!-- <script type="module" src="pwabuilder-sw-register.js"></script> -->
+    <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register(
+        '/pwabuilder-sw.js'
+      );
+    }
+  </script>
 
 
 	<style>
