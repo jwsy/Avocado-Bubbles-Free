@@ -1,29 +1,16 @@
 {
   "background_color": "#ffffff",
-  "description": "Avocado Bubbles Free kids game made with KaboomJS",
+  "categories": ["games", "avocado"],
+  "description": "Avocado Bubbles Free game for kids made with KaboomJS",
   "dir": "ltr",
   "display": "minimal-ui",
-  "display_override": [],
-  "lang": "en",
-  "name": "Avocado Bubbles Free",
-  "orientation": "any",
-  "prefer_related_applications": false,
-  "related_applications": [],
-  "scope": "/",
-  "share_target": {},
-  "short_name": "Avocado Bubbles Free",
-  "start_url": "/",
-  "theme_color": "#ffffff",
-  "categories": ["games", "avocado"],
-  "screenshots": [
-    {
-      "src": "sprites/avocado-bubbles-screenshot-wide-1280x720.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpg",
-      "platform": "wide",
-      "label": "Screenshot of popping bubbbles"
-    }
+  "display_override": [
+    "window-controls-overlay"
   ],
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
+  "handle_links": "not-preferred",
   "icons": [
     {
       "src": "sprites/avocado-bubbles-icon.png",
@@ -37,5 +24,31 @@
       "purpose": "any"
     }
   ],
-  "shortcuts": []
+  "id": "/",
+  "lang": "en",
+  "name": "Avocado Bubbles Free",
+  "orientation": "any",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope": "/",
+  "share_target": {},
+  "short_name": "avocado-bubbles-free",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "screenshots": [
+    {
+      "src": "sprites/avocado-bubbles-screenshot-wide-1280x720.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpg",
+      "platform": "wide",
+      "label": "Screenshot of popping bubbbles"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Play",
+      "url": "/",
+      "description": "Play!"
+    }
+  ]
 }
