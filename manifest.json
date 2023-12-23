@@ -26,6 +26,9 @@
   ],
   "id": "/",
   "lang": "en",
+  "launch_handler": {
+    "client_mode": ["auto"]
+  },
   "name": "Avocado Bubbles Free",
   "orientation": "any",
   "prefer_related_applications": false,
